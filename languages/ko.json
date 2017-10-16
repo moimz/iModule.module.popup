@@ -1,0 +1,20 @@
+{
+	"type":{
+		"HTML":"HTML직접입력",
+		"IMAGE":"이미지",
+		"LINK":"외부URL",
+		"EXTERNAL":"외부파일"
+	},
+	"window":{
+		"WINDOW":"팝업창",
+		"LAYER":"레이어"
+	},
+	"admin":{
+		"configs":{
+			"form":{
+				"default_setting":"기본설정",
+				"templet":"템플릿"
+			}
+		}
+	}
+}
