@@ -19,6 +19,7 @@ if ($data == null) {
 	return;
 }
 
+$data->site = $data->domain.'/'.$data->language;
 $data->start_date = date('Y-m-d',$data->start_date);
 $data->end_date = date('Y-m-d',$data->end_date);
 

@@ -61,7 +61,7 @@
 				},
 				"domain":{
 					"type":"varchar",
-					"length":50
+					"length":100
 				},
 				"language":{
 					"type":"varchar",
@@ -107,9 +107,24 @@
 			},
 			"indexes":{
 				"idx":"primary_key",
-				"start_date,end_date":"index"
+				"domain,language,start_date,end_date":"index"
 			},
 			"auto_increment":"idx"
+		},
+		"popup_admin_table":{
+			"columns":{
+				"midx":{
+					"type":"int",
+					"length":11
+				},
+				"domain":{
+					"type":"varchar",
+					"length":100
+				}
+			},
+			"indexes":{
+				"midx,domain":"primary_key"
+			}
 		}
 	}
 }

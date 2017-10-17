@@ -66,10 +66,14 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 					}
 				}),
 				columns:[{
-					text:"팝업명",
-					dataIndex:"title",
+					text:"게시사이트",
+					dataIndex:"site",
 					minWidth:150,
 					flex:1
+				},{
+					text:"팝업명",
+					dataIndex:"title",
+					width:180
 				},{
 					text:"종류",
 					dataIndex:"type",

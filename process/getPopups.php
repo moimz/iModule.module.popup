@@ -11,7 +11,9 @@
  */
 if (defined('__IM__') == false) exit;
 
-$popups = $this->db()->select($this->table->popup,'idx,window,size,position')->where('start_date',time(),'<=')->where('end_date',time(),'>')->orderBy('start_date','asc')->get();
+$site = $this->IM->getSite();
+$popups = $this->db()->select($this->table->popup,'idx,window,size,position')->where('domain',$site->domain)->where('language',$site->language)->where('start_date',time(),'<=')->where('end_date',time(),'>')->orderBy('start_date','asc')->get();
+
 
 for ($i=0, $loop=count($popups);$i<$loop;$i++) {
 	$size = explode(',',$popups[$i]->size);

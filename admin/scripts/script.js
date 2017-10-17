@@ -34,6 +34,31 @@ var Popup = {
 									name:"title",
 									fieldLabel:"팝업명"
 								}),
+								new Ext.form.ComboBox({
+									fieldLabel:"게시사이트",
+									name:"site",
+									store:new Ext.data.JsonStore({
+										proxy:{
+											type:"ajax",
+											url:ENV.getProcessUrl("popup","@getSites"),
+											reader:{type:"json"}
+										},
+										remoteSort:false,
+										autoLoad:true,
+										sorters:[{property:"sort",direction:"ASC"}],
+										fields:["display","value"],
+										listeners:{
+											load:function(store) {
+												if (idx === undefined && store.getCount() == 1) {
+													Ext.getCmp("ModulePopupAddForm").getForm().findField("site").setValue(store.getAt(0).get("value"));
+													Ext.getCmp("ModulePopupAddForm").getForm().findField("site").hide();
+												}
+											}
+										}
+									}),
+									displayField:"display",
+									valueField:"value"
+								}),
 								new Ext.form.FieldContainer({
 									fieldLabel:"팝업게시일",
 									layout:"hbox",

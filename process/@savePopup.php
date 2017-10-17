@@ -14,6 +14,7 @@ if (defined('__IM__') == false) exit;
 $errors = array();
 $idx = Request('idx');
 $title = Request('title') ? Request('title') : $errors['title'] = $this->getErrorText('REQUIRED');
+$site = Request('site') ? Request('site') : $errors['site'] = $this->getErrorText('REQUIRED');
 $type = Request('type') ? Request('type') : $errors['type'] = $this->getErrorText('REQUIRED');
 $window = Request('window') ? Request('window') : $errors['window'] = $this->getErrorText('REQUIRED');
 $start_date = Request('start_date') ? strtotime(Request('start_date')) : $errors['start_date'] = $this->getErrorText('REQUIRED');
@@ -74,8 +75,11 @@ if ($type != 'IMAGE') {
 }
 
 if (count($errors) == 0) {
+	$site = explode('/',$site);
 	$insert = array();
 	$insert['title'] = $title;
+	$insert['domain'] = $site[0];
+	$insert['language'] = $site[1];
 	$insert['type'] = $type;
 	$insert['window'] = $window;
 	$insert['start_date'] = $start_date;

@@ -50,6 +50,7 @@ class ModulePopup {
 		 */
 		$this->table = new stdClass();
 		$this->table->popup = 'popup_table';
+		$this->table->admin = 'popup_admin_table';
 		
 		/**
 		 * 팝업창을 띄우기 위한 자바스크립트를 로딩한다.
@@ -362,6 +363,19 @@ class ModulePopup {
 		if ($action == 'delete') {
 //			$this->db()->delete($this->table->attachment)->where('idx',$idx)->execute();
 		}
+	}
+	
+	/**
+	 * 모듈관리자인지 확인한다.
+	 *
+	 * @param int $midx 회원고유번호 (없을 경우 현재 로그인한 사용자)
+	 * @return boolean $isAdmin
+	 */
+	function isAdmin($midx=null) {
+		$midx = $midx == null ? $this->IM->getModule('member')->getLogged() : $midx;
+		if ($this->IM->getModule('member')->isAdmin($midx) == true) return true;
+		
+		return $this->db()->select($this->table->admin)->where('midx',$midx)->has();
 	}
 }
 ?>
