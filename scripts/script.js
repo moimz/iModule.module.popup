@@ -33,9 +33,15 @@ var Popup = {
 					
 					if (popup.position == "AUTO") {
 						var position = Popup.position(popup.window,popup.width,popup.height);
+					} else {
+						var position = {x:popup.x,y:popup.y};
+						Popup.open(popup.idx,popup.x,popup.y,popup.width,popup.height,popup.html);
+					}
+					
+					if (popup.window == "WINDOW") {
 						Popup.open(popup.idx,position.x,position.y,popup.width,popup.height,popup.html);
 					} else {
-						Popup.open(popup.idx,popup.x,popup.y,popup.width,popup.height,popup.html);
+						Popup.show(popup.idx,position.x,position.y,popup.width,popup.height,popup.html);
 					}
 				}
 			}
@@ -90,7 +96,6 @@ var Popup = {
 		}
 	},
 	show:function(idx,x,y,width,height,html) {
-		console.log(idx,x,y,width,height);
 		var $html = $(html);
 		
 		$html.addClass("layer");

@@ -56,7 +56,7 @@ class ModulePopup {
 		 * 팝업창을 띄우기 위한 자바스크립트를 로딩한다.
 		 * 팝업모듈은 글로벌모듈이기 때문에 모듈클래스 선언부에서 선언해주어야 사이트 레이아웃에 반영된다.
 		 */
-		if (defined('__IM_ADMIN__') == false && $IM->menu == 'index' && $IM->page == '') {
+		if ($this->getModule()->isInstalled() == true && defined('__IM_ADMIN__') == false && $IM->menu == 'index' && $IM->page == '') {
 			$this->IM->addHeadResource('style',$this->getModule()->getDir().'/styles/style.css');
 			$this->IM->addHeadResource('script',$this->getModule()->getDir().'/scripts/script.js');
 			$this->getTemplet()->getHeader();

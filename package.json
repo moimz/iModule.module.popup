@@ -29,27 +29,27 @@
 	"configs":{
 		"templet":{
 			"type":"string",
-			"value":"default"
+			"default":"default"
 		},
 		"auto_layer":{
 			"type":"boolean",
-			"value":false
+			"default":false
 		},
 		"window_x":{
 			"type":"int",
-			"value":0
+			"default":0
 		},
 		"window_y":{
 			"type":"int",
-			"value":0
+			"default":0
 		},
 		"layer_x":{
 			"type":"int",
-			"value":0
+			"default":0
 		},
 		"layer_y":{
 			"type":"int",
-			"value":0
+			"default":0
 		}
 	},
 	"databases":{
