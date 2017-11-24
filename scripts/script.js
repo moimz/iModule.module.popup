@@ -35,7 +35,6 @@ var Popup = {
 						var position = Popup.position(popup.window,popup.width,popup.height);
 					} else {
 						var position = {x:popup.x,y:popup.y};
-						Popup.open(popup.idx,popup.x,popup.y,popup.width,popup.height,popup.html);
 					}
 					
 					if (popup.window == "WINDOW") {
