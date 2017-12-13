@@ -11,7 +11,7 @@
  */
 if (defined('__IM__') == false) exit;
 
-$site = $this->IM->getSite();
+$site = $this->IM->getSite(false);
 $popups = $this->db()->select($this->table->popup,'idx,window,size,position')->where('domain',$site->domain)->where('language',$site->language)->where('start_date',time(),'<=')->where('end_date',time(),'>')->orderBy('start_date','asc')->get();
 
 
