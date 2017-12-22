@@ -57,74 +57,90 @@
 			"columns":{
 				"idx":{
 					"type":"int",
-					"length":11
+					"length":11,
+					"comment":"고유값"
 				},
 				"domain":{
 					"type":"varchar",
-					"length":100
+					"length":100,
+					"comment":"팝업도메인"
 				},
 				"language":{
 					"type":"varchar",
-					"length":2
+					"length":2,
+					"comment":"팝업언어"
 				},
 				"title":{
 					"type":"varchar",
-					"length":100
+					"length":100,
+					"comment":"팝업명"
 				},
 				"type":{
 					"type":"enum",
 					"length":"'HTML','LINK','IMAGE','EXTERNAL'",
-					"default":"HTML"
+					"default":"HTML",
+					"comment":"팝업내용형태"
 				},
 				"window":{
 					"type":"enum",
 					"length":"'WINDOW','LAYER'",
-					"default":"WINDOW"
+					"default":"WINDOW",
+					"comment":"팝업형태"
 				},
 				"start_date":{
 					"type":"int",
-					"length":11
+					"length":11,
+					"comment":"팝업노출시작일"
 				},
 				"end_date":{
 					"type":"int",
-					"length":11
+					"length":11,
+					"comment":"팝업노출종료일"
 				},
 				"size":{
 					"type":"varchar",
-					"length":10
+					"length":10,
+					"comment":"팝업크기"
 				},
 				"position":{
 					"type":"varchar",
-					"length":10
+					"length":10,
+					"comment":"팝업위치"
 				},
 				"content":{
-					"type":"longtext"
+					"type":"longtext",
+					"comment":"팝업내용"
 				},
 				"reg_date":{
 					"type":"int",
-					"length":11
+					"length":11,
+					"comment":"등록일"
 				}
 			},
 			"indexes":{
 				"idx":"primary_key",
 				"domain,language,start_date,end_date":"index"
 			},
-			"auto_increment":"idx"
+			"auto_increment":"idx",
+			"comment":"팝업관리"
 		},
 		"popup_admin_table":{
 			"columns":{
 				"midx":{
 					"type":"int",
-					"length":11
+					"length":11,
+					"comment":"관리자"
 				},
 				"domain":{
 					"type":"varchar",
-					"length":100
+					"length":100,
+					"comment":"관리도메인"
 				}
 			},
 			"indexes":{
 				"midx,domain":"primary_key"
-			}
+			},
+			"comment":"팝업관리자관리"
 		}
 	}
 }
