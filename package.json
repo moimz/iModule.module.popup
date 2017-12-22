@@ -28,7 +28,7 @@
 	"include":false,
 	"configs":{
 		"templet":{
-			"type":"string",
+			"type":"templet",
 			"default":"default"
 		},
 		"auto_layer":{
