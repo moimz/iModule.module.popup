@@ -1,13 +1,14 @@
 <?php
 /**
- * 이 파일은 iModule CTL 모듈의 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈의 일부입니다. (https://www.imodule.kr)
  *
  * 팝업모듈 환경설정 패널을 가져온다.
  * 
  * @file /modules/popup/admin/configs.php
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 3.0.0.160910
+ * @version 3.0.0
+ * @modified 2018. 3. 18.
  */
 if (defined('__IM__') == false) exit;
 ?>
@@ -15,7 +16,8 @@ if (defined('__IM__') == false) exit;
 new Ext.form.Panel({
 	id:"ModuleConfigForm",
 	border:false,
-	bodyPadding:"10 10 5 10",
+	bodyPadding:10,
+	width:600,
 	fieldDefaults:{labelAlign:"right",labelWidth:100,anchor:"100%",allowBlank:true},
 	items:[
 		new Ext.form.FieldSet({
