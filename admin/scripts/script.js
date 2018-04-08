@@ -171,7 +171,7 @@ var Popup = {
 							id:"ModulePopupAdd-HTML",
 							title:"팝업내용입력",
 							items:[
-								Admin.wysiwygField("","html","")
+								Admin.wysiwygField("","html")
 							]
 						}),
 						new Ext.form.FieldSet({
