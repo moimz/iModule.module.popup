@@ -313,13 +313,19 @@ class ModulePopup {
 		return '';
 	}
 	
-	function getPopupContext($idx,$window=null) {
+	/**
+	 * 팝업 컨텍스트를 가져온다.
+	 *
+	 * @param string $idx 팝업고유번호
+	 * @return string $html 컨텍스트 HTML
+	 */
+	function getPopupContext($idx) {
 		$popup = $this->db()->select($this->table->popup)->where('idx',$idx)->getOne();
 		if ($popup == null) return $this->IM->printError('NOT_FOUND');
 		
 		$size = explode(',',$popup->size);
 		
-		$header = PHP_EOL.'<div data-role="module" data-module="popup" data-window="'.($window ? $window : $popup->window).'" data-idx="'.$idx.'">'.PHP_EOL;
+		$header = PHP_EOL.'<div data-role="module" data-module="popup" data-idx="'.$idx.'">'.PHP_EOL;
 		$footer = PHP_EOL.'</div>'.PHP_EOL;
 		
 		if ($popup->type == 'HTML') {
