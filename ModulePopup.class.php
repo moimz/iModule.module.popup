@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.0.0
- * @modified 2017. 11. 22.
+ * @modified 2018. 6. 21.
  */
 class ModulePopup {
 	/**
@@ -20,8 +20,10 @@ class ModulePopup {
 	/**
 	 * DB 관련 변수정의
 	 *
+	 * @private object $DB DB접속객체
 	 * @private string[] $table DB 테이블 별칭 및 원 테이블명을 정의하기 위한 변수
 	 */
+	private $DB;
 	private $table;
 	
 	/**
@@ -42,6 +44,9 @@ class ModulePopup {
 	 * @see /classes/Module.class.php
 	 */
 	function __construct($IM,$Module) {
+		/**
+		 * iModule 및 Module 코어 선언
+		 */
 		$this->IM = $IM;
 		$this->Module = $Module;
 		
@@ -80,7 +85,8 @@ class ModulePopup {
 	 * @return DB $DB
 	 */
 	function db() {
-		return $this->IM->db($this->Module->getInstalled()->database);
+		if ($this->DB == null || $this->DB->ping() === false) $this->DB = $this->IM->db($this->getModule()->getInstalled()->database);
+		return $this->DB;
 	}
 	
 	/**
