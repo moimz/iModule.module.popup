@@ -23,7 +23,7 @@ new Ext.form.Panel({
 		new Ext.form.FieldSet({
 			title:Popup.getText("admin/configs/form/default_setting"),
 			items:[
-				Admin.templetField(Popup.getText("admin/configs/form/templet"),"templet","popup",false),
+				Admin.templetField(Popup.getText("admin/configs/form/templet"),"templet","module","popup",false),
 				new Ext.form.Checkbox({
 					name:"auto_layer",
 					fieldLabel:"자동레이어팝업",
