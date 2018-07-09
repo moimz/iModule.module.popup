@@ -100,6 +100,42 @@ class ModulePopup {
 	}
 	
 	/**
+	 * URL 을 가져온다.
+	 *
+	 * @param string $view
+	 * @param string $idx
+	 */
+	function getUrl($view=null,$idx=null) {
+		$url = $this->IM->getUrl(null,null,false);
+		$view = $view === null ? $this->IM->getView() : $view;
+		$idx = $idx === null ? $this->IM->getIdx() : $idx;
+		
+		if ($view == null || $view == false) return $url;
+		$url.= '/'.$view;
+		
+		if ($idx == null || $idx == false) return $url;
+		return $url.'/'.$idx;
+	}
+	
+	/**
+	 * view 값을 가져온다.
+	 *
+	 * @param string $view
+	 */
+	function getView() {
+		return $this->IM->getView();
+	}
+	
+	/**
+	 * idx 값을 가져온다.
+	 *
+	 * @param string $idx
+	 */
+	function getIdx() {
+		return $this->IM->getIdx();
+	}
+	
+	/**
 	 * [코어] 사이트 외부에서 현재 모듈의 API를 호출하였을 경우, API 요청을 처리하기 위한 함수로 API 실행결과를 반환한다.
 	 * 소스코드 관리를 편하게 하기 위해 각 요쳥별로 별도의 PHP 파일로 관리한다.
 	 *
@@ -275,13 +311,13 @@ class ModulePopup {
 	 * @return string $html 컨텍스트 HTML
 	 */
 	function getContainer($container) {
-		$popup = $this->db()->select($this->table->popup)->where('idx',$this->IM->view)->getOne();
+		$popup = $this->db()->select($this->table->popup)->where('idx',$this->getView())->getOne();
 		if ($popup == null) return $this->IM->printError('NOT_FOUND');
 		
 		switch ($container) {
 			case 'window' :
 				$this->IM->addHeadResource('script',$this->getModule()->getDir().'/scripts/script.js');
-				$context = $this->getPopupContext($this->IM->view);
+				$context = $this->getPopupContext($this->getView());
 				
 				$size = explode(',',$popup->size);
 				$width = $size[0] + $this->getTemplet()->getPackage()->width;
