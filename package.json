@@ -12,20 +12,14 @@
 		"name":"Arzz",
 		"email":"arzz@arzz.com"
 	},
-	"homepage":"https://www.imodule.kr",
-	"versionChecker":"http://www.moimz.com/ko/api/moimz/getLatest",
+	"homepage":"https://www.imodules.io",
+	"versionChecker":"https://api.moimz.com/download/latest",
 	"dependencies":{
-		"core":"3.0.0",
-		"attachment":"3.0.0",
-		"keyword":"3.0.0"
+		"core":"3.0.0"
 	},
 	"language":"ko",
 	"admin":true,
-	"context":false,
 	"global":true,
-	"article":false,
-	"widget":false,
-	"include":false,
 	"configs":{
 		"templet":{
 			"type":"templet",
@@ -63,12 +57,12 @@
 				"domain":{
 					"type":"varchar",
 					"length":100,
-					"comment":"팝업도메인"
+					"comment":"팝업게시사이트도메인"
 				},
 				"language":{
 					"type":"varchar",
 					"length":2,
-					"comment":"팝업언어"
+					"comment":"팝업게시사이트언어셋"
 				},
 				"title":{
 					"type":"varchar",
@@ -79,7 +73,7 @@
 					"type":"enum",
 					"length":"'HTML','LINK','IMAGE','EXTERNAL'",
 					"default":"HTML",
-					"comment":"팝업내용형태"
+					"comment":"팝업내용종류"
 				},
 				"window":{
 					"type":"enum",
@@ -90,12 +84,12 @@
 				"start_date":{
 					"type":"int",
 					"length":11,
-					"comment":"팝업노출시작일"
+					"comment":"팝업게시시작일"
 				},
 				"end_date":{
 					"type":"int",
 					"length":11,
-					"comment":"팝업노출종료일"
+					"comment":"팝업게시종료일"
 				},
 				"size":{
 					"type":"varchar",
@@ -122,7 +116,7 @@
 				"domain,language,start_date,end_date":"index"
 			},
 			"auto_increment":"idx",
-			"comment":"팝업관리"
+			"comment":"팝업 팝업게시 테이블"
 		},
 		"popup_admin_table":{
 			"columns":{
@@ -140,7 +134,7 @@
 			"indexes":{
 				"midx,domain":"primary_key"
 			},
-			"comment":"팝업관리자관리"
+			"comment":"팝업 관리자 테이블"
 		}
 	}
 }
