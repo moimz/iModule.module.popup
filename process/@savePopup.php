@@ -1,13 +1,14 @@
 <?php
 /**
- * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
  *
  * 팝업설정을 저장한다.
  * 
  * @file /modules/popup/process/@savePopup.php
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 3.0.0.160903
+ * @version 3.0.0
+ * @modified 2018. 9. 19.
  */
 if (defined('__IM__') == false) exit;
 
@@ -28,6 +29,8 @@ if ($idx) {
 		$results->message = $this->getErrorText('NOT_FOUND');
 		return;
 	}
+} else {
+	$popup = null;
 }
 
 if ($type == 'HTML') {
@@ -36,7 +39,7 @@ if ($type == 'HTML') {
 }
 
 if ($type == 'IMAGE') {
-	if ($idx) {
+	if ($idx && $popup->type == 'IMAGE') {
 		$content = json_decode($popup->content);
 	} else {
 		$content = new stdClass();
@@ -45,9 +48,12 @@ if ($type == 'IMAGE') {
 	}
 	
 	if (isset($_FILES['image']) == true && $_FILES['image']['tmp_name']) {
-		if (count($errors) == 0 && $content->image > 0) $this->IM->getModule('attachment')->fileDelete($content->image);
-		$file = $this->IM->getModule('attachment')->fileSave($_FILES['image']['name'],$_FILES['image']['tmp_name'],'popup','image','PUBLISHED',true);
-		$content->image = $file;
+		if (count($errors) == 0 && $content->image > 0) {
+			$this->IM->getModule('attachment')->fileReplace($content->image,$_FILES['image']['name'],$_FILES['image']['tmp_name'],true);
+		} else {
+			$file = $this->IM->getModule('attachment')->fileSave($_FILES['image']['name'],$_FILES['image']['tmp_name'],'popup','image','PUBLISHED',true);
+			$content->image = $file;
+		}
 	} else {
 		if (!$idx) {
 			$errors['image'] = $this->getErrorText('REQUIRED');
@@ -93,6 +99,13 @@ if (count($errors) == 0) {
 		$this->db()->update($this->table->popup,$insert)->where('idx',$idx)->execute();
 	} else {
 		$this->db()->insert($this->table->popup,$insert)->execute();
+	}
+	
+	if ($popup != null && $popup->type == 'IMAGE' && $popup->type != $type) {
+		$image = json_decode($popup->content);
+		if ($image->image > 0) {
+			$this->IM->getModule('attachment')->fileDelete($image->image);
+		}
 	}
 	
 	$results->success = true;
