@@ -365,9 +365,12 @@ class ModulePopup {
 		} elseif ($popup->type == 'IMAGE') {
 			$content = json_decode($popup->content);
 			$image = $this->IM->getModule('attachment')->getFileInfo($content->image);
-			
-			if ($content->link) $content = '<a href="'.$content->link.'" target="_blank"><img src="'.$image->path.'"></a>';
-			else $content = '<img src="'.$image->path.'">';
+			if ($image == null) {
+				$content = '';
+			} else {
+				if ($content->link) $content = '<a href="'.$content->link.'" target="_blank"><img src="'.$image->path.'"></a>';
+				else $content = '<img src="'.$image->path.'">';
+			}
 		} elseif ($popup->type == 'LINK') {
 			$content = '<iframe src="'.$popup->content.'" scrolling="auto" frameborder="0" style="width:'.$size[0].'px; height:'.$size[1].'px;"></iframe>';
 		} elseif ($popup->type == 'EXTERNAL') {
@@ -419,7 +422,12 @@ class ModulePopup {
 		 * 첨부파일 삭제
 		 */
 		if ($action == 'delete') {
-//			$this->db()->delete($this->table->attachment)->where('idx',$idx)->execute();
+			$check = $this->db()->select($this->table->popup)->where('type','IMAGE')->where('content','{"image":'.$idx.',','LIKE')->getOne();
+			if ($check != null) {
+				$content = json_decode($check->content);
+				$content->image = 0;
+				$this->db()->update($this->table->popup,array('content'=>json_encode($content)))->where('idx',$check->idx)->execute();
+			}
 		}
 	}
 	
