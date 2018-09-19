@@ -6,9 +6,9 @@
  * 
  * @file /modules/popup/admin/configs.php
  * @author Arzz (arzz@arzz.com)
- * @license MIT License
+ * @license GPLv3
  * @version 3.0.0
- * @modified 2018. 3. 18.
+ * @modified 2018. 9. 19.
  */
 if (defined('__IM__') == false) exit;
 ?>

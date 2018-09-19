@@ -1,12 +1,13 @@
 /**
- * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
  *
  * 팝업창을 띄운다.
  * 
  * @file /modules/popup/scripts/script.js
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 3.0.0.160903
+ * @version 3.0.0
+ * @modified 2018. 9. 19.
  */
 var Popup = {
 	isError:false,

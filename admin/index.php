@@ -1,13 +1,14 @@
 <?php
 /**
- * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
  *
- * 홈페이지 내 팝업창과 관련된 전반적인 기능을 관리한다.
+ * 팝업모듈 관리자 UI를 구성한다.
  * 
  * @file /modules/popup/admin/index.php
  * @author Arzz (arzz@arzz.com)
- * @license MIT License
- * @version 3.0.0.160910
+ * @license GPLv3
+ * @version 3.0.0
+ * @modified 2018. 9. 19.
  */
 if (defined('__IM__') == false) exit;
 ?>

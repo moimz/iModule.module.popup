@@ -1,3 +1,14 @@
+/**
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
+ *
+ * 팝업모듈 기본템플릿 - 스타일시트
+ * 
+ * @file /modules/popup/templets/default/styles/style.css
+ * @author Arzz (arzz@arzz.com)
+ * @license MIT License
+ * @version 3.0.0
+ * @modified 2018. 9. 19.
+ */
 div[data-module=popup] {font-size:0;}
 div[data-module=popup] > div[data-type=HTML] {font-size:14px; overflow:auto;}
 div[data-module=popup] > div[data-type=EXTERNAL] {overflow:auto;}

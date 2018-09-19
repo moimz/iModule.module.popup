@@ -1,1 +1,12 @@
+/**
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
+ *
+ * 팝업레이어 스타일시트
+ * 
+ * @file /modules/popup/styles/style.css
+ * @author Arzz (arzz@arzz.com)
+ * @license MIT License
+ * @version 3.0.0
+ * @modified 2018. 9. 19.
+ */
 div[data-module=popup].layer {background:#fff; position:absolute; z-index:100; border:1px solid rgba(0,0,0,0.3); box-shadow:1px 1px 3px rgba(0,0,0,0.15);}
