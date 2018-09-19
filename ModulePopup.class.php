@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
  *
  * 홈페이지 내 팝업창과 관련된 전반적인 기능을 관리한다.
  * 
@@ -34,6 +34,13 @@ class ModulePopup {
 	 */
 	private $lang = null;
 	private $oLang = null;
+	
+	/**
+	 * DB접근을 줄이기 위해 DB에서 불러온 데이터를 저장할 변수를 정의한다.
+	 *
+	 * @private $admins 관리자정보
+	 */
+	private $admins = array();
 	
 	/**
 	 * class 선언
@@ -426,7 +433,12 @@ class ModulePopup {
 		$midx = $midx == null ? $this->IM->getModule('member')->getLogged() : $midx;
 		if ($this->IM->getModule('member')->isAdmin($midx) == true) return true;
 		
-		return $this->db()->select($this->table->admin)->where('midx',$midx)->has();
+		if (isset($this->admins[$midx]) == false) {
+			$this->admins[$midx] = $this->db()->select($this->table->admin)->where('midx',$midx)->get('domain');
+		}
+		
+		if (in_array('*',$this->admins[$midx]) == true) return true;
+		else return $this->admins[$midx];
 	}
 }
 ?>

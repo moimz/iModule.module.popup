@@ -1,6 +1,6 @@
 <?php
 /**
- * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodule.kr)
+ * 이 파일은 iModule 팝업모듈 일부입니다. (https://www.imodules.io)
  *
  * 팝업목록을 불러온다.
  * 
@@ -17,17 +17,8 @@ $limit = Request('limit');
 $sort = Request('sort');
 $dir = Request('dir');
 
-if ($this->IM->getModule('member')->isAdmin() == false) {
-	$domain = $this->db()->select($this->table->admin)->where('midx')->get('domain');
-	if (count($admin) == 0) {
-		$results->success = false;
-		$results->message = $this->getErrorText('FORBIDDEN');
-		return;
-	}
-}
-
 $lists = $this->db()->select($this->table->popup);
-if ($this->IM->getModule('member')->isAdmin() == false) $lists->where('domain',$domain,'IN');
+if ($this->isAdmin() !== true) $lists->where('domain',$this->isAdmin(),'IN');
 $total = $lists->copy()->count();
 $lists = $lists->limit($start,$limit)->orderBy($sort,$dir)->get();
 for ($i=0, $loop=count($lists);$i<$loop;$i++) {
