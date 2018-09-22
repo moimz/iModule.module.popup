@@ -446,7 +446,7 @@ class ModulePopup {
 		}
 		
 		if (in_array('*',$this->admins[$midx]) == true) return true;
-		else return $this->admins[$midx];
+		else return count($this->admins[$midx]) == 0 ? false : $this->admins[$midx];
 	}
 }
 ?>
