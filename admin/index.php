@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license GPLv3
  * @version 3.0.0
- * @modified 2018. 9. 19.
+ * @modified 2018. 11. 22.
  */
 if (defined('__IM__') == false) exit;
 ?>
@@ -25,6 +25,55 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				border:false,
 				layout:"fit",
 				tbar:[
+					new Ext.form.ComboBox({
+						id:"SiteList",
+						store:new Ext.data.JsonStore({
+							proxy:{
+								type:"ajax",
+								simpleSortMode:true,
+								url:ENV.getProcessUrl("admin","@getSites"),
+								extraParams:{is_all:"true"},
+								reader:{type:"json"}
+							},
+							remoteSort:false,
+							sorters:[{property:"sort",direction:"ASC"}],
+							autoLoad:true,
+							pageSize:0,
+							fields:["display","value"],
+							listeners:{
+								load:function(store,records,success,e) {
+									if (success == true) {
+										if (store.getCount() > 0 && store.findExact("value",Ext.getCmp("SiteList").getValue(),0) == -1) {
+											Ext.getCmp("SiteList").setValue(store.getAt(0).get("value"));
+										}
+									} else {
+										if (e.getError()) {
+											Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+										} else {
+											Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("DATA_LOAD_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR})
+										}
+									}
+								}
+							}
+						}),
+						autoLoadOnValue:true,
+						editable:false,
+						displayField:"display",
+						valueField:"value",
+						width:400,
+						listeners:{
+							change:function(form,value) {
+								if (value) {
+									var temp = value.split("@");
+									var domain = temp[0];
+									var language = temp[1];
+									Ext.getCmp("ModulePopupList").getStore().getProxy().setExtraParam("domain",domain);
+									Ext.getCmp("ModulePopupList").getStore().getProxy().setExtraParam("language",language);
+									Ext.getCmp("ModulePopupList").getStore().reload();
+								}
+							}
+						}
+					}),
 					new Ext.Button({
 						text:"팝업생성",
 						iconCls:"xi xi-windows-add",
