@@ -7,8 +7,8 @@
  * @file /modules/popup/admin/index.php
  * @author Arzz (arzz@arzz.com)
  * @license GPLv3
- * @version 3.0.0
- * @modified 2018. 11. 22.
+ * @version 3.1.0
+ * @modified 2019. 7. 18.
  */
 if (defined('__IM__') == false) exit;
 ?>
@@ -78,7 +78,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						text:"팝업생성",
 						iconCls:"xi xi-windows-add",
 						handler:function() {
-							Popup.add();
+							Popup.list.add();
 						}
 					}),
 					"-",
@@ -86,7 +86,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						text:"선택팝업삭제",
 						iconCls:"mi mi-trash",
 						handler:function() {
-							Popup.delete();
+							Popup.list.delete();
 						}
 					})
 				],
@@ -99,7 +99,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						reader:{type:"json"}
 					},
 					remoteSort:true,
-					sorters:[{property:"start_date",direction:"DESC"}],
+					sorters:[{property:"title",direction:"ASC"}],
 					autoLoad:true,
 					pageSize:50,
 					fields:[],
@@ -190,7 +190,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 				}),
 				listeners:{
 					itemdblclick:function(grid,record) {
-						Popup.add(record.data.idx);
+						Popup.list.add(record.data.idx);
 					},
 					itemcontextmenu:function(grid,record,item,index,e) {
 						var menu = new Ext.menu.Menu();
@@ -212,7 +212,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 							iconCls:"xi xi-form",
 							text:"팝업 수정",
 							handler:function() {
-								Popup.add(record.data.idx);
+								Popup.list.add(record.data.idx);
 							}
 						});
 						
@@ -220,7 +220,7 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 							iconCls:"mi mi-trash",
 							text:"팝업 삭제",
 							handler:function() {
-								Popup.delete(record.data.idx);
+								Popup.list.delete(record.data.idx);
 							}
 						});
 						
@@ -228,7 +228,131 @@ Ext.onReady(function () { Ext.getCmp("iModuleAdminPanel").add(
 						menu.showAt(e.getXY());
 					}
 				}
-			})
+			}),
+			<?php if ($this->IM->getModule('member')->isAdmin() == true) { ?>
+			new Ext.grid.Panel({
+				id:"ModulePopupAdminList",
+				iconCls:"xi xi-crown",
+				title:"관리자 관리",
+				border:false,
+				tbar:[
+					new Ext.Button({
+						text:"관리자 추가",
+						iconCls:"mi mi-plus",
+						handler:function() {
+							Popup.admin.add();
+						}
+					}),
+					new Ext.Button({
+						text:"선택관리자 삭제",
+						iconCls:"mi mi-trash",
+						handler:function() {
+							var selected = Ext.getCmp("ModulePopupAdminList").getSelectionModel().getSelection();
+							if (selected.length == 0) {
+								Ext.Msg.show({title:Admin.getText("alert/error"),msg:"삭제할 관리자를 선택하여 주십시오.",buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
+								return;
+							}
+							
+							var midxes = [];
+							for (var i=0, loop=selected.length;i<loop;i++) {
+								midxes[i] = selected[i].data.midx;
+							}
+							Popup.admin.delete(midxes.join(','));
+						}
+					})
+				],
+				store:new Ext.data.JsonStore({
+					proxy:{
+						type:"ajax",
+						simpleSortMode:true,
+						url:ENV.getProcessUrl("popup","@getAdmins"),
+						extraParams:{},
+						reader:{type:"json"}
+					},
+					remoteSort:false,
+					sorters:[{property:"sort",direction:"ASC"}],
+					autoLoad:true,
+					pageSize:0,
+					fields:[],
+					listeners:{
+						load:function(store,records,success,e) {
+							if (success == false) {
+								if (e.getError()) {
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:e.getError(),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
+								} else {
+									Ext.Msg.show({title:Admin.getText("alert/error"),msg:Admin.getErrorText("LOAD_DATA_FAILED"),buttons:Ext.Msg.OK,icon:Ext.Msg.ERROR});
+								}
+							}
+						}
+					}
+				}),
+				columns:[{
+					text:"이름",
+					dataIndex:"name",
+					sortable:true,
+					width:80,
+					renderer:function(value,p,record) {
+						var sHTML = "";
+						if (record.data.team && record.data.role == "OWNER") sHTML+= '<i class="xi xi-crown"></i> ';
+						sHTML+= value;
+						
+						return sHTML;
+					}
+				},{
+					text:"이메일",
+					dataIndex:"email",
+					sortable:true,
+					width:180
+				},{
+					text:"접근가능 사이트",
+					dataIndex:"site",
+					sortable:true,
+					minWidth:140,
+					flex:1
+				}],
+				selModel:new Ext.selection.CheckboxModel(),
+				bbar:[
+					new Ext.Button({
+						iconCls:"x-tbar-loading",
+						handler:function() {
+							Ext.getCmp("ModulePopupAdminList").getStore().reload();
+						}
+					}),
+					"->",
+					{xtype:"tbtext",text:Admin.getText("text/grid_help")}
+				],
+				listeners:{
+					itemdblclick:function(grid,record) {
+						Popup.admin.add(record.data.midx);
+					},
+					itemcontextmenu:function(grid,record,item,index,e) {
+						var menu = new Ext.menu.Menu();
+						
+						menu.add('<div class="x-menu-title">'+record.data.name+'</div>');
+						
+						menu.add({
+							iconCls:"xi xi-key",
+							text:"접근권한수정",
+							handler:function() {
+								Popup.admin.add(record.data.midx);
+							}
+						});
+
+						menu.add({
+							iconCls:"xi xi-trash",
+							text:"삭제",
+							handler:function() {
+								Popup.admin.delete(record.data.midx);
+							}
+						});
+						
+						e.stopEvent();
+						menu.showAt(e.getXY());
+					}
+				}
+			}),
+			<?php } ?>
+			null
 		]
 	})
 ); });
