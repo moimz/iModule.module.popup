@@ -7,8 +7,8 @@
  * @file /modules/popup/ModulePopup.class.php
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
- * @version 3.0.0
- * @modified 2018. 6. 21.
+ * @version 3.1.0
+ * @modified 2019. 7. 18.
  */
 class ModulePopup {
 	/**
@@ -204,6 +204,11 @@ class ModulePopup {
 		 */
 		$IM = $this->IM;
 		$Module = $this;
+
+		/**
+		 * 회원모듈 관리자를 불러온다.
+		 */
+		$this->IM->getModule('admin')->loadModule('member');
 		
 		ob_start();
 		INCLUDE $this->getModule()->getPath().'/admin/index.php';
@@ -438,16 +443,18 @@ class ModulePopup {
 	 * @param int $midx 회원고유번호 (없을 경우 현재 로그인한 사용자)
 	 * @return boolean $isAdmin
 	 */
-	function isAdmin($midx=null) {
+	function isAdmin($midx=null,$domain=null) {
 		$midx = $midx == null ? $this->IM->getModule('member')->getLogged() : $midx;
 		if ($this->IM->getModule('member')->isAdmin($midx) == true) return true;
 		
-		if (isset($this->admins[$midx]) == false) {
-			$this->admins[$midx] = $this->db()->select($this->table->admin)->where('midx',$midx)->get('domain');
-		}
+		$check = $this->db()->select($this->table->admin)->where('midx',$midx)->getOne();
+		if ($check == null) return false;
+		if ($check->domain == '*') return true;
 		
-		if (in_array('*',$this->admins[$midx]) == true) return true;
-		else return count($this->admins[$midx]) == 0 ? false : $this->admins[$midx];
+		$domains = explode(',',$check->domain);
+		if ($domain != null && in_array($domain,$domains) === false) return false;
+		
+		return $domains;
 	}
 }
 ?>

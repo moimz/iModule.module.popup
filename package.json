@@ -4,7 +4,7 @@
 	"title":{
 		"ko":"팝업관리"
 	},
-	"version":"3.0.0",
+	"version":"3.1.0",
 	"description":{
 		"ko":"팝업창을 생성하고 홈페이지에 게시한다."
 	},
@@ -126,13 +126,13 @@
 					"comment":"관리자"
 				},
 				"domain":{
-					"type":"varchar",
-					"length":100,
+					"type":"text",
+					"is_null":true,
 					"comment":"관리도메인"
 				}
 			},
 			"indexes":{
-				"midx,domain":"primary_key"
+				"midx":"primary_key"
 			},
 			"comment":"팝업 관리자 테이블"
 		}
