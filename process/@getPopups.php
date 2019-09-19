@@ -8,7 +8,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license MIT License
  * @version 3.1.0
- * @modified 2019. 7. 18.
+ * @modified 2019. 9. 19.
  */
 if (defined('__IM__') == false) exit;
 
@@ -37,10 +37,14 @@ $lists = $lists->limit($start,$limit)->orderBy($sort,$dir)->get();
 
 for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 	$site = $this->IM->getSites($lists[$i]->domain,$lists[$i]->language);
-	$lists[$i]->site = $site->title.'(';
-	$lists[$i]->site.= $site->is_ssl == true ? 'https://' : 'http://';
-	$lists[$i]->site.= $site->domain.__IM_DIR__.'/'.$site->language.'/)';
 	
+	if ($site === null) {
+		$lists[$i]->site = 'UNKNOWN SITE(http://'.$lists[$i]->domain.'/'.$lists[$i]->language.')';
+	} else {
+		$lists[$i]->site = $site->title.'(';
+		$lists[$i]->site.= $site->is_ssl == true ? 'https://' : 'http://';
+		$lists[$i]->site.= $site->domain.__IM_DIR__.'/'.$site->language.'/)';
+	}
 }
 
 $results->success = true;
