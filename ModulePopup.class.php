@@ -38,7 +38,7 @@ class ModulePopup {
 	/**
 	 * DB접근을 줄이기 위해 DB에서 불러온 데이터를 저장할 변수를 정의한다.
 	 *
-	 * @private $admins 관리자정보
+	 * @private object[] $admins 관리자정보
 	 */
 	private $admins = array();
 	
