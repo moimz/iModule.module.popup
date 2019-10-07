@@ -7,7 +7,7 @@
  * @author Arzz (arzz@arzz.com)
  * @license GPLv3
  * @version 3.1.0
- * @modified 2019. 7. 18.
+ * @modified 2019. 10. 7.
  */
 var Popup = {
 	/**
@@ -236,9 +236,9 @@ var Popup = {
 											autoLoad:true,
 											remoteSort:false,
 											sorters:[{property:"path",direction:"ASC"}],
-											fields:["path"]
+											fields:["path","display"]
 										}),
-										displayField:"path",
+										displayField:"display",
 										valueField:"path",
 										afterBodyEl:'<div class="x-form-help">팝업창에 표시될 외부파일을 선택하여 주십시오.</div>'
 									}),
