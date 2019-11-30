@@ -42,7 +42,7 @@ for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 		$lists[$i]->site = 'UNKNOWN SITE(http://'.$lists[$i]->domain.'/'.$lists[$i]->language.')';
 	} else {
 		$lists[$i]->site = $site->title.'(';
-		$lists[$i]->site.= $site->is_ssl == true ? 'https://' : 'http://';
+		$lists[$i]->site.= $site->is_https == true ? 'https://' : 'http://';
 		$lists[$i]->site.= $site->domain.__IM_DIR__.'/'.$site->language.'/)';
 	}
 }

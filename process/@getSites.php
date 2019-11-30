@@ -17,7 +17,7 @@ if ($this->isAdmin() !== true) $lists->where('domain',$this->isAdmin(),'IN');
 $lists = $lists->get();
 for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 	$lists[$i]->display = $lists[$i]->title.'(';
-	$lists[$i]->display.= $lists[$i]->is_ssl == 'TRUE' ? 'https://' : 'http://';
+	$lists[$i]->display.= $lists[$i]->is_https == 'TRUE' ? 'https://' : 'http://';
 	$lists[$i]->display.= $lists[$i]->domain.__IM_DIR__.'/'.$lists[$i]->language.'/)';
 	$lists[$i]->value = $lists[$i]->domain.'/'.$lists[$i]->language;
 }

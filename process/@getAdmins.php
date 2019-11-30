@@ -28,7 +28,7 @@ for ($i=0, $loop=count($lists);$i<$loop;$i++) {
 			foreach ($domains as $idx=>$domain) {
 				$site = $this->IM->getSites($domain, $this->IM->getLanguage());
 				$lists[$i]->site.= ($idx != 0 ? ', ' : '').$site->title.'(';
-				$lists[$i]->site.= $site->is_ssl == true ? 'https://' : 'http://';
+				$lists[$i]->site.= $site->is_https == true ? 'https://' : 'http://';
 				$lists[$i]->site.= $site->domain.__IM_DIR__.'/'.$site->language.'/)';
 			}
 		}
